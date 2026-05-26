@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Examen final JavaScript</title>
+    <style>
+        /* ==============================
+           ESTILOS GENERALES
+           En esta zona se define el aspecto visual de toda la página.
+        ============================== */
+
+        /* Estilos generales del cuerpo de la página */
+        body {
+            font-family: Arial, sans-serif; /* Define la fuente principal de toda la página */
+            margin: 0; /* Elimina el margen por defecto del navegador */
+            background-color: #f4f4f4; /* Aplica un color gris claro al fondo general */
+            color: #222; /* Define el color principal del texto */
+        }
+
+        /* Estilos de la cabecera superior de la página */
+        header {
+            background-color: #222; /* Aplica un fondo oscuro a la cabecera */
+            color: white; /* Pone el texto de la cabecera en color blanco */
+            padding: 20px; /* Añade espacio interior alrededor del contenido */
+            text-align: center; /* Centra el texto de la cabecera */
+        }
+
+        /* Contenedor principal donde se colocan las secciones */
+        main {
+            display: grid; /* Activa CSS Grid para organizar las zonas de la página */
+            grid-template-columns: 1fr 1.5fr 1.5fr; /* Crea tres columnas: controles, carta y menú */
+            gap: 20px; /* Añade separación entre columnas y filas */
+            padding: 20px; /* Añade espacio interior alrededor del contenido principal */
+        }
+
+        /* Clase para la barra superior donde aparecen el día y la frase */
+        .barra-superior {
+            grid-column: 1 / -1; /* Hace que la barra ocupe todas las columnas del grid */
+        }
+
+        /* Estilos comunes para todas las secciones */
+        section {
+            background-color: white; /* Aplica fondo blanco a cada bloque */
+            padding: 20px; /* Añade espacio interior dentro de cada sección */
+            border-radius: 8px; /* Redondea las esquinas de las secciones */
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08); /* Añade una sombra suave */
+        }
+
+        /* Estilos para los títulos de segundo nivel */
+        h2 {
+            margin-top: 0; /* Elimina el margen superior para alinear mejor el título */
+        }
+
+        /* Estilos de las etiquetas de formulario */
+        label {
+            display: block; /* Hace que cada etiqueta ocupe una línea completa */
+            margin-top: 15px; /* Añade separación superior respecto al elemento anterior */
+            font-weight: bold; /* Pone el texto de la etiqueta en negrita */
+        }
+
+        /* Estilos comunes para inputs, selectores y botones */
+        input,
+        select,
+        button {
+            width: 100%; /* Hace que ocupen todo el ancho disponible */
+            padding: 8px; /* Añade espacio interior para mejorar la lectura */
+            margin-top: 5px; /* Añade una pequeña separación superior */
+            box-sizing: border-box; /* Incluye padding y borde dentro del ancho total */
+        }
+
+        /* Estilos específicos de los botones */
+        button {
+            cursor: pointer; /* Cambia el cursor para indicar que se puede hacer clic */
+            background-color: #222; /* Aplica fondo oscuro al botón */
+            color: white; /* Pone el texto del botón en blanco */
+            border: none; /* Elimina el borde por defecto */
+            margin-top: 15px; /* Añade separación superior entre botones o controles */
+            border-radius: 4px; /* Redondea ligeramente las esquinas del botón */
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Generador de Menú restaurante</h1>
+    </header>
+    <main>
+        <div>
+            Día seleccionado: <span class="dia"></span> | Frase del día: <span class="frasedia">todavía no se ha escrito ninguna frase.</span>
+        </div>
+        </section>
+
+        <!-- =====================================================
+        ZONA IZQUIERDA: FORMULARIO Y CONTROLES
+        ====================================================== -->
+        <section>
+        <h2>Controles</h2>
+
+        <!-- Ejercicio 1: input de frase del día -->
+        <label for="fraseDia">Frase del día</label>
+        <input type="text" id="fraseDia" placeholder="Escribe la frase del día">
+
+        <!-- Ejercicio 2: selector de día de la semana -->
+        <label for="selectorDia">Día de la semana</label>
+        <select id="selectorDia">
+            <option value="lunes">Lunes</option>
+            <option value="martes">Martes</option>
+            <option value="miercoles">Miércoles</option>
+            <option value="jueves">Jueves</option>
+            <option value="viernes">Viernes</option>
+            <option value="sabado">Sábado</option>
+            <option value="domingo">Domingo</option>
+        </select>
+
+        <!-- Ejercicio 5: selector de platos generado desde el array -->
+        <label for="selectorPlatos">Selecciona un plato</label>
+        <select id="selectorPlatos"></select>
+
+        <button id="btnAgregar">Añadir plato a la carta</button>
+
+        <!-- Ejercicio 4: botón para vaciar la carta -->
+        <button id="btnVaciar">Vaciar carta</button>
+        </section>
+
+        <!-- =====================================================
+        ZONA CENTRAL: CARTA
+        ====================================================== -->
+        <section id="seccionCarta">
+        <h2>Carta</h2>
+        <div id="contenedorCarta"></div>
+        </section>
+
+        <!-- =====================================================
+        ZONA DERECHA: MENÚ
+        ====================================================== -->
+        <section id="seccionMenu">
+        <h2>Menú del día</h2>
+
+        <!-- Ejercicio 7: aquí se pinta el menú dividido en primeros y segundos -->
+        <div id="contenedorMenu"></div>
+        </section>
+    </main>
+    <script>
+        let input = document.querySelector("#fraseDia")
+        let frasedia1 = document.querySelector(".frasedia")
+        let selectDia = document.querySelector("#selectorDia")
+        let dia = document.querySelector(".dia")
+        let seccionCarta = document.querySelector("#contenedorCarta")
+
+        function frasedia(){
+            frasedia1.innerHTML = input.value
+        }
+
+        function cambio(){
+            dia.innerHTML = selectDia.value
+        }
+
+        input.addEventListener("input",frasedia)
+        selectDia.addEventListener("change",cambio)
+
+        let platosDisponibles = [
+        {
+            nombre: "Ensalada César",
+            descripcion: "Ensalada con pollo, lechuga, queso y salsa César",
+            tipo: "primero",
+            precio: 8.50,
+            foto: "ensalada.jpg"
+        },
+        {
+            nombre: "Macarrones boloñesa",
+            descripcion: "Pasta con salsa de tomate y carne picada",
+            tipo: "primero",
+            precio: 9.00,
+            foto: "macarrones.jpg"
+        },
+        {
+            nombre: "Pollo al horno",
+            descripcion: "Pollo asado con patatas",
+            tipo: "segundo",
+            precio: 11.50,
+            foto: "pollo.jpg"
+        },
+        {
+            nombre: "Merluza a la plancha",
+            descripcion: "Merluza con verduras salteadas",
+            tipo: "segundo",
+            precio: 12.00,
+            foto: "merluza.jpg"
+        }
+        ];
+
+        function mostrarCarta(){
+            for(let i= 0; i<platosDisponibles.length; i++){
+                seccionCarta.innerHTML += `<div> <p>${platosDisponibles[i].nombre}</p> <p>${platosDisponibles[i].descripcion}</p> <p>${platosDisponibles[i].precio}</p> `
+            }
+        }
+
+        mostrarCarta(mostrarCarta)
+    </script>
+</body>
+</html>
