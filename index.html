@@ -78,6 +78,22 @@
             margin-top: 15px; /* Añade separación superior entre botones o controles */
             border-radius: 4px; /* Redondea ligeramente las esquinas del botón */
         }
+
+        .carta{
+            background: white;
+            border: 2px solid black;
+            border-radius: 10px;
+        }
+
+        .nocarta{
+            border: 2px dotted gray;
+            text-align: center;
+            padding: 10px;
+        }
+
+        .none{
+            display: none;
+        }
     </style>
 </head>
 <body>
@@ -137,7 +153,10 @@
         <h2>Menú del día</h2>
 
         <!-- Ejercicio 7: aquí se pinta el menú dividido en primeros y segundos -->
-        <div id="contenedorMenu"></div>
+        <div id="contenedorMenu">
+            <div class="primero"></div>
+            <div class="segundo"></div>
+        </div>
         </section>
     </main>
     <script>
@@ -146,7 +165,16 @@
         let selectDia = document.querySelector("#selectorDia")
         let dia = document.querySelector(".dia")
         let seccionCarta = document.querySelector("#contenedorCarta")
-
+        let vaciar = document.querySelector("#btnVaciar")
+        let selectorPlatos = document.querySelector("#selectorPlatos")
+        let btnAgregar = document.querySelector("#btnAgregar")
+        let menu = document.querySelector("#contenedorMenu")
+        let primero = document.querySelector(".primero")
+        let segundo = document.querySelector(".segundo")
+        let sectCarta = document.querySelector("#seccionCarta")
+        let sectMenu = document.querySelector("#seccionMenu")
+        console.log(sectCarta)
+        
         function frasedia(){
             frasedia1.innerHTML = input.value
         }
@@ -164,38 +192,90 @@
             descripcion: "Ensalada con pollo, lechuga, queso y salsa César",
             tipo: "primero",
             precio: 8.50,
-            foto: "ensalada.jpg"
+            foto: "https://imag.bonviveur.com/presentacion-de-la-ensalada-de-aguacate.jpg"
         },
         {
             nombre: "Macarrones boloñesa",
             descripcion: "Pasta con salsa de tomate y carne picada",
             tipo: "primero",
             precio: 9.00,
-            foto: "macarrones.jpg"
+            foto: "https://www.recetasdeescandalo.com/wp-content/uploads/2020/05/Macarrones-con-tomate-casero.-Receta-muy-sabrosa-y-sencilla-1.jpg"
         },
         {
             nombre: "Pollo al horno",
             descripcion: "Pollo asado con patatas",
             tipo: "segundo",
             precio: 11.50,
-            foto: "pollo.jpg"
+            foto: "https://wp-cdn.typhur.com/wp-content/uploads/2024/02/roasted-chicken.jpg"
         },
         {
             nombre: "Merluza a la plancha",
             descripcion: "Merluza con verduras salteadas",
             tipo: "segundo",
             precio: 12.00,
-            foto: "merluza.jpg"
+            foto: "https://www.bekiacocina.com/images/cocina/0000/877-h.jpg"
         }
         ];
 
+        let platos = [
+
+        ]
+
         function mostrarCarta(){
             for(let i= 0; i<platosDisponibles.length; i++){
-                seccionCarta.innerHTML += `<div> <p>${platosDisponibles[i].nombre}</p> <p>${platosDisponibles[i].descripcion}</p> <p>${platosDisponibles[i].precio}</p> `
+                seccionCarta.innerHTML += `<div class="carta"> <p>${platosDisponibles[i].nombre}</p> <p>${platosDisponibles[i].descripcion}</p> <p>${platosDisponibles[i].precio}</p> <img width="100px" src="${platosDisponibles[i].foto}">`
             }
         }
 
         mostrarCarta(mostrarCarta)
+
+        function borrar(){
+            seccionCarta.innerHTML = `<p class="nocarta">No hay platos que mostrar</p>`
+        }
+        vaciar.addEventListener("click",borrar)
+
+        for(let i = 0;i<platosDisponibles.length;i++){
+            selectorPlatos.innerHTML += `<option value="${i}">${platosDisponibles[i].nombre}</option>`
+        }
+
+        function insertar(){
+            seccionCarta.innerHTML = ""
+            platos.push({nombre: selectorPlatos.value,})
+            console.log(platosDisponibles)
+            mostrarCarta(mostrarCarta)
+        }
+
+        btnAgregar.addEventListener("click",insertar)
+
+        function pintar(){
+            let primeros = `<div> <h2>Primero</h2>`
+            let segundos = `<div> <h2>Segundo</h2>`
+            for (let i=0;i<platosDisponibles.length;i++){
+                if(platosDisponibles[i].tipo == "primero"){
+                    primeros+= `<div class="carta"> <p>${platosDisponibles[i].nombre}</p> <p>${platosDisponibles[i].descripcion}</p> <p>${platosDisponibles[i].precio}</p></div`
+                    primero.innerHTML = primeros + "</div>"
+                }
+                if (platosDisponibles[i].tipo == "segundo"){
+                    segundos+= `<div class="carta"> <p>${platosDisponibles[i].nombre}</p> <p>${platosDisponibles[i].descripcion}</p> <p>${platosDisponibles[i].precio}</p></div>`
+                    segundo.innerHTML = segundos + "</div>"
+                }
+            }
+        }
+
+        pintar(pintar)
+        console.log(selectDia)
+        function cambio(){
+            if(selectDia.value === "sabado","domingo"){
+                sectMenu.classList.remove("none")
+                sectCarta.classList.add("none")
+            } 
+            if(selectDia.value === "lunes","martes","miercoles","jueves","viernes"){
+                sectMenu.classList.add("none")
+                sectCarta.classList.remove("none")
+            }
+        }
+
+        selectDia.addEventListener("change",cambio)
     </script>
 </body>
 </html>
