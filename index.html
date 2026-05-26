@@ -264,18 +264,16 @@
 
         pintar(pintar)
         console.log(selectDia)
-        function cambio(){
             if(selectDia.value === "sabado","domingo"){
-                sectMenu.classList.remove("none")
-                sectCarta.classList.add("none")
-            } 
-            if(selectDia.value === "lunes","martes","miercoles","jueves","viernes"){
                 sectMenu.classList.add("none")
                 sectCarta.classList.remove("none")
+                console.log(sectCarta.classList)
+                console.log(sectMenu.classList)
+            } 
+            if(selectDia.value === "lunes","martes","miercoles","jueves","viernes"){
+                sectMenu.classList.remove("none")
+                sectCarta.classList.add("none")
             }
-        }
-
-        selectDia.addEventListener("change",cambio)
     </script>
 </body>
 </html>
