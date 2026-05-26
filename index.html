@@ -264,16 +264,11 @@
 
         pintar(pintar)
         console.log(selectDia)
-            if(selectDia.value === "sabado","domingo"){
-                sectMenu.classList.add("none")
-                sectCarta.classList.remove("none")
-                console.log(sectCarta.classList)
-                console.log(sectMenu.classList)
-            } 
-            if(selectDia.value === "lunes","martes","miercoles","jueves","viernes"){
-                sectMenu.classList.remove("none")
-                sectCarta.classList.add("none")
-            }
+
+        if (selectDia.value == "lunes", "martes","miercoles","jueves","viernes"){
+            sectCarta.classList.add("none")
+        } 
+        console.log(selectDia.value)
     </script>
 </body>
 </html>
